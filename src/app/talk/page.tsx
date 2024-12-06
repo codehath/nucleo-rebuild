@@ -15,6 +15,7 @@ export default function Talk() {
   const [isListening, setIsListening] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [items, setItems] = useState<ItemType[]>([]);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
 
   // Refs for audio handling
   const wavRecorderRef = useRef<WavRecorder>(
@@ -112,6 +113,34 @@ export default function Talk() {
     client.createResponse();
   };
 
+  // Add function to handle message clicks
+  const handleMessageClick = async (item: ItemType) => {
+    const wavStreamPlayer = wavStreamPlayerRef.current;
+
+    // If there's no audio file, do nothing
+    if (!item.formatted.file) return;
+
+    // If this message is currently playing, stop it
+    if (currentlyPlaying === item.id) {
+      await wavStreamPlayer.interrupt();
+      setCurrentlyPlaying(null);
+      return;
+    }
+
+    // If another message is playing, stop it first
+    if (currentlyPlaying) {
+      await wavStreamPlayer.interrupt();
+    }
+
+    // Play the new message
+    if (item.formatted.file.url) {
+      setCurrentlyPlaying(item.id);
+      await wavStreamPlayer.add16BitPCM(item.formatted.audio, item.id);
+      // Reset currently playing when done
+      setCurrentlyPlaying(null);
+    }
+  };
+
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center p-6 relative">
       {/* Visualization */}
@@ -144,22 +173,24 @@ export default function Talk() {
           {items.map((item) => (
             <div
               key={item.id}
+              onClick={() => handleMessageClick(item)}
               className={cn(
-                "mb-4 p-3 rounded-lg",
+                "mb-4 p-3 rounded-lg cursor-pointer transition-colors",
                 item.role === "user"
-                  ? "bg-blue-500/20 ml-8"
-                  : "bg-purple-500/20 mr-8"
+                  ? "bg-blue-500/20 ml-8 hover:bg-blue-500/30"
+                  : "bg-purple-500/20 mr-8 hover:bg-purple-500/30",
+                currentlyPlaying === item.id && "ring-2 ring-primary"
               )}
             >
               <p className="text-sm text-white">
                 {item.formatted.transcript || item.formatted.text}
               </p>
               {item.formatted.file && (
-                <audio
-                  src={item.formatted.file.url}
-                  controls
-                  className="mt-2 w-full"
-                />
+                <div className="mt-1 text-xs text-muted-foreground">
+                  {currentlyPlaying === item.id
+                    ? "Playing..."
+                    : "Click to play audio"}
+                </div>
               )}
             </div>
           ))}
