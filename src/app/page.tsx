@@ -1,36 +1,51 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Brain, BookOpen, Trophy, ChevronRight } from 'lucide-react'
-import Link from "next/link"
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Brain, BookOpen, Trophy, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="p-6 max-w-screen-sm mx-auto space-y-6">
       <h1 className="text-2xl font-bold">Welcome back, Alex</h1>
-      
+
       {/* Emotional Check-in */}
       <Card>
         <CardContent className="p-6 space-y-4">
           <div>
-            <h2 className="text-xl font-semibold">How are you feeling today?</h2>
-            <p className="text-sm text-muted-foreground">Take a moment to reflect on your emotions</p>
+            <h2 className="text-xl font-semibold">
+              How are you feeling today?
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Take a moment to reflect on your emotions
+            </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <Button variant="outline" className="h-auto py-2 px-2 sm:px-4 space-x-1 sm:space-x-2 text-xs sm:text-sm">
+            <Button
+              variant="outline"
+              className="h-auto py-2 px-2 sm:px-4 space-x-1 sm:space-x-2 text-xs sm:text-sm"
+            >
               <span>😊</span>
               <span>Great</span>
             </Button>
-            <Button variant="outline" className="h-auto py-2 px-2 sm:px-4 space-x-1 sm:space-x-2 text-xs sm:text-sm">
+            <Button
+              variant="outline"
+              className="h-auto py-2 px-2 sm:px-4 space-x-1 sm:space-x-2 text-xs sm:text-sm"
+            >
               <span>😐</span>
               <span>Okay</span>
             </Button>
-            <Button variant="outline" className="h-auto py-2 px-2 sm:px-4 space-x-1 sm:space-x-2 text-xs sm:text-sm">
+            <Button
+              variant="outline"
+              className="h-auto py-2 px-2 sm:px-4 space-x-1 sm:space-x-2 text-xs sm:text-sm"
+            >
               <span>😔</span>
               <span>Not Good</span>
             </Button>
-            <Button variant="outline" className="h-auto py-2 px-2 sm:px-4 space-x-1 sm:space-x-2 text-xs sm:text-sm">
+            <Button
+              variant="outline"
+              className="h-auto py-2 px-2 sm:px-4 space-x-1 sm:space-x-2 text-xs sm:text-sm"
+            >
               <span>😡</span>
               <span>Frustrated</span>
             </Button>
@@ -43,7 +58,9 @@ export default function Home() {
         <CardContent className="p-6 space-y-4">
           <div>
             <h2 className="text-xl font-semibold">Your Learning Path</h2>
-            <p className="text-sm text-muted-foreground">Keep growing your emotional intelligence</p>
+            <p className="text-sm text-muted-foreground">
+              Keep growing your emotional intelligence
+            </p>
           </div>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -59,7 +76,7 @@ export default function Home() {
       </Card>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <Card className="hover:bg-accent transition-colors cursor-pointer">
           <CardContent className="p-6 flex flex-col items-center justify-center space-y-2">
             <div className="p-2 rounded-full bg-primary/10">
@@ -76,6 +93,16 @@ export default function Home() {
             <span className="font-medium">Lessons</span>
           </CardContent>
         </Card>
+        <Link href="/console">
+          <Card className="hover:bg-accent transition-colors cursor-pointer">
+            <CardContent className="p-6 flex flex-col items-center justify-center space-y-2">
+              <div className="p-2 rounded-full bg-primary/10">
+                <ChevronRight className="h-6 w-6 text-primary" />
+              </div>
+              <span className="font-medium">Console</span>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
 
       {/* Progress */}
@@ -87,10 +114,12 @@ export default function Home() {
               <Trophy className="h-8 w-8 text-yellow-500" />
               <div>
                 <div className="font-bold">Level 7</div>
-                <div className="text-sm text-muted-foreground">Empathy Master</div>
+                <div className="text-sm text-muted-foreground">
+                  Empathy Master
+                </div>
               </div>
             </div>
-            <Link 
+            <Link
               href="/rewards"
               className="flex items-center text-sm text-primary hover:underline"
             >
@@ -105,6 +134,5 @@ export default function Home() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
-
